@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test sth</title>
+</head>
+<body>
+<script>
+    const handler = {
+        apply: function (target, thisArg, args){
+            console.log("Intercepted a call tocreateElement with args: " + args);
+            return target.apply(thisArg, args)
+        }
+    };
+
+    document.createElement= new Proxy(document.createElement, handler);
+    document.createElement('div');
+    //Call a "virgin" createElement:
+    try {
+        document.createElement.toString();
+    }catch(e){
+        console.log("I saw your proxy!");
+    }
+</script>
+</body>
+</html>
